@@ -1,0 +1,17 @@
+[
+  {
+    "directory": "/Users/bonatto/Work/Cpp/Banana",
+    "command": "clang++ -std=c++17 -Iinclude -c src/lexer.cpp",
+    "file": "src/lexer.cpp"
+  },
+  {
+    "directory": "/Users/bonatto/Work/Cpp/Banana",
+    "command": "clang++ -std=c++17 -Iinclude -c src/ast.cpp",
+    "file": "src/ast.cpp"
+  },
+  {
+    "directory": "/Users/bonatto/Work/Cpp/Banana",
+    "command": "clang++ -std=c++17 -Iinclude -c src/main.cpp",
+    "file": "src/main.cpp"
+  }
+]
