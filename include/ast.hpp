@@ -38,3 +38,23 @@ class CallExprAST : public ExprAST {
 public:
 	explicit CallExprAST(const std::string &Callee, std::vector<std::unique_ptr<ExprAST>> Args);
 };
+
+class PrototypeAST {
+	std::string Name;
+	std::vector<std::string> Args;
+
+public:
+	explicit PrototypeAST(const std::string &Name, std::vector<std::string> Args);
+
+	const std::string &getName() const { return Name; }
+};
+
+class FunctionAST {
+	std::unique_ptr<PrototypeAST> Proto;
+	std::unique_ptr<ExprAST> Body;
+
+public:
+	explicit FunctionAST(std::unique_ptr<PrototypeAST> Proto, std::unique_ptr<ExprAST> Body);
+};
+
+
