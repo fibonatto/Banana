@@ -1,17 +1,56 @@
-CXX = clang++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Iinclude
+# =============================================================================
+# Banana
+# =============================================================================
 
-TARGET = banana
-SRC = $(wildcard src/*.cpp)
-OBJ = $(SRC:.cpp=.o)
+CXX := clang++
+
+TARGET := build/banana
+
+SRC := $(wildcard src/*.cpp)
+OBJ := $(SRC:src/%.cpp=build/%.o)
+DEP := $(OBJ:.o=.d)
+
+CPPFLAGS := -Iinclude
+
+CXXFLAGS := \
+	-std=c++17 \
+	-Wall \
+	-Wextra \
+	-MMD \
+	-MP
+
+LDFLAGS :=
+LDLIBS :=
+
+
+# =============================================================================
+# Targets
+# =============================================================================
+
+.PHONY: all clean run rebuild
+
+all: $(TARGET)
+
 
 $(TARGET): $(OBJ)
-	$(CXX) $(OBJ) -o $@
+	@mkdir -p $(dir $@)
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-src/%.o: src/%.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+build/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
+
+-include $(DEP)
+
+
+run: $(TARGET)
+	./$(TARGET)
+
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -rf build
 
-.PHONY: clean
+
+rebuild: clean all
